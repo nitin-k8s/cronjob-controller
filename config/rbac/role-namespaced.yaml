@@ -31,8 +31,3 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: cronjob-sync-sa
-
-# Usage: replace REPLACE_WITH_TARGET_NAMESPACE with the namespace you want the controller
-# to be limited to and apply this manifest in that namespace. Also set WATCH_NAMESPACE
-# env var on the Deployment to that same namespace so the controller starts in
-# namespace-scoped mode.
