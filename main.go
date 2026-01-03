@@ -44,8 +44,7 @@ func main() {
 
     // Optionally restrict controller to a single namespace by setting WATCH_NAMESPACE
     // environment variable. If empty, the controller watches all namespaces.
-    //watchNamespace := os.Getenv("WATCH_NAMESPACE")
-	watchNamespace := "default"
+    watchNamespace := os.Getenv("WATCH_NAMESPACE")
 
 	fmt.Println("Creating manager...")
     mgrOpts := ctrl.Options{
