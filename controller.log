@@ -1,0 +1,265 @@
+itinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % oc get deployment nginx-deployment -o yaml | 
+grep -i image
+      - image: nginx:1.21
+        imagePullPolicy: IfNotPresent
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % oc logs -f cronjob-controller-d6d9567cd-vrxc8
+
+Starting cronjob-controller...
+Creating manager...
+Initializing manager...
+2026-01-01T19:13:54Z    INFO    controller-runtime.metrics      Metrics server is starting to listen      {"addr": ":8080"}
+Registering Deployment controller with manager...
+2026-01-01T19:13:55Z    INFO    setup   starting manager
+2026-01-01T19:13:55Z    INFO    starting server {"path": "/metrics", "kind": "metrics", "addr": "[::]:8080"}
+2026-01-01T19:13:55Z    INFO    Starting server {"kind": "health probe", "addr": "[::]:8081"}
+I0101 19:13:55.073877       1 leaderelection.go:245] attempting to acquire leader lease default/cronjob-controller.example.com...
+I0101 19:14:13.634847       1 leaderelection.go:255] successfully acquired lease default/cronjob-controller.example.com
+2026-01-01T19:14:13Z    DEBUG   events  cronjob-controller-d6d9567cd-vrxc8_0d7ee470-0f91-4c39-9a9e-1284573981cd became leader     {"type": "Normal", "object": {"kind":"Lease","namespace":"default","name":"cronjob-controller.example.com","uid":"45a388f1-7352-4b2f-8f6e-b3a6a083f750","apiVersion":"coordination.k8s.io/v1","resourceVersion":"21020"}, "reason": "LeaderElection"}
+2026-01-01T19:14:13Z    INFO    Starting EventSource    {"controller": "deployment", "controllerGroup": "apps", "controllerKind": "Deployment", "source": "kind source: *v1.Deployment"}
+2026-01-01T19:14:13Z    INFO    Starting Controller     {"controller": "deployment", "controllerGroup": "apps", "controllerKind": "Deployment"}
+E0101 19:14:13.667077       1 event.go:280] Server rejected event '&v1.Event{TypeMeta:v1.TypeMeta{Kind:"", APIVersion:""}, ObjectMeta:v1.ObjectMeta{Name:"cronjob-controller.example.com.1886b14e4c3b0347", GenerateName:"", Namespace:"default", SelfLink:"", UID:"", ResourceVersion:"", Generation:0, CreationTimestamp:time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC), DeletionTimestamp:<nil>, DeletionGracePeriodSeconds:(*int64)(nil), Labels:map[string]string(nil), Annotations:map[string]string(nil), OwnerReferences:[]v1.OwnerReference(nil), Finalizers:[]string(nil), ManagedFields:[]v1.ManagedFieldsEntry(nil)}, InvolvedObject:v1.ObjectReference{Kind:"Lease", Namespace:"default", Name:"cronjob-controller.example.com", UID:"45a388f1-7352-4b2f-8f6e-b3a6a083f750", APIVersion:"coordination.k8s.io/v1", ResourceVersion:"21020", FieldPath:""}, Reason:"LeaderElection", Message:"cronjob-controller-d6d9567cd-vrxc8_0d7ee470-0f91-4c39-9a9e-1284573981cd became leader", Source:v1.EventSource{Component:"cronjob-controller-d6d9567cd-vrxc8_0d7ee470-0f91-4c39-9a9e-1284573981cd", Host:""}, FirstTimestamp:time.Date(2026, time.January, 1, 19, 14, 13, 633999687, time.Local), LastTimestamp:time.Date(2026, time.January, 1, 19, 14, 13, 633999687, time.Local), Count:1, Type:"Normal", EventTime:time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC), Series:(*v1.EventSeries)(nil), Action:"", Related:(*v1.ObjectReference)(nil), ReportingController:"", ReportingInstance:""}': 'events is forbidden: User "system:serviceaccount:default:cronjob-sync-sa" cannot create resource "events" in API group "" in the namespace "default"' (will not retry!)
+2026-01-01T19:14:13Z    INFO    Starting workers        {"controller": "deployment", "controllerGroup": "apps", "controllerKind": "Deployment", "worker count": 2}
+2026-01-01T19:14:13Z    INFO    reconciling deployment  {"controller": "deployment", "controllerGroup": "apps", "controllerKind": "Deployment", "Deployment": {"name":"nginx-deployment","namespace":"default"}, "namespace": "default", "name": "nginx-deployment", "reconcileID": "169e175c-b62d-4148-80d7-327d21b1d1cb", "deployment": {"name":"nginx-deployment","namespace":"default"}}
+2026-01-01T19:14:13Z    INFO    reconciling deployment  {"controller": "deployment", "controllerGroup": "apps", "controllerKind": "Deployment", "Deployment": {"name":"cronjob-controller","namespace":"default"}, "namespace": "default", "name": "cronjob-controller", "reconcileID": "f64c38a1-bb0e-4355-8dac-a190cbd5d22e", "deployment": {"name":"cronjob-controller","namespace":"default"}}
+2026-01-01T19:14:13Z    INFO    cronjob already up-to-date      {"controller": "deployment", "controllerGroup": "apps", "controllerKind": "Deployment", "Deployment": {"name":"nginx-deployment","namespace":"default"}, "namespace": "default", "name": "nginx-deployment", "reconcileID": "169e175c-b62d-4148-80d7-327d21b1d1cb", "cronjob": "nginx-cronjob"}
+2026-01-01T19:14:13Z    INFO    reconciling deployment  {"controller": "deployment", "controllerGroup": "apps", "controllerKind": "Deployment", "Deployment": {"name":"csi-snapshot-controller","namespace":"kube-system"}, "namespace": "kube-system", "name": "csi-snapshot-controller", "reconcileID": "26112c82-3da4-41d2-9a3a-bb97a59ef597", "deployment": {"name":"csi-snapshot-controller","namespace":"kube-system"}}
+2026-01-01T19:14:13Z    INFO    reconciling deployment  {"controller": "deployment", "controllerGroup": "apps", "controllerKind": "Deployment", "Deployment": {"name":"router-default","namespace":"openshift-ingress"}, "namespace": "openshift-ingress", "name": "router-default", "reconcileID": "16f4186b-b8f3-4c9a-8f48-69a2d89d8c7d", "deployment": {"name":"router-default","namespace":"openshift-ingress"}}
+2026-01-01T19:14:13Z    INFO    reconciling deployment  {"controller": "deployment", "controllerGroup": "apps", "controllerKind": "Deployment", "Deployment": {"name":"routes-controller","namespace":"openshift-ingress"}, "namespace": "openshift-ingress", "name": "routes-controller", "reconcileID": "eb08df37-937d-47c4-b6fa-36bd71f6d024", "deployment": {"name":"routes-controller","namespace":"openshift-ingress"}}
+2026-01-01T19:14:13Z    INFO    reconciling deployment  {"controller": "deployment", "controllerGroup": "apps", "controllerKind": "Deployment", "Deployment": {"name":"service-ca","namespace":"openshift-service-ca"}, "namespace": "openshift-service-ca", "name": "service-ca", "reconcileID": "6203a867-7bde-4f2b-88bc-fdc92ff52405", "deployment": {"name":"service-ca","namespace":"openshift-service-ca"}}
+2026-01-01T19:14:13Z    INFO    reconciling deployment  {"controller": "deployment", "controllerGroup": "apps", "controllerKind": "Deployment", "Deployment": {"name":"lvms-operator","namespace":"openshift-storage"}, "namespace": "openshift-storage", "name": "lvms-operator", "reconcileID": "8ed28ea6-2111-444d-9a6f-29d702d1bc87", "deployment": {"name":"lvms-operator","namespace":"openshift-storage"}}
+
+
+
+
+
+
+
+
+
+
+
+
+2026-01-01T19:16:34Z    INFO    reconciling deployment  {"controller": "deployment", "controllerGroup": "apps", "controllerKind": "Deployment", "Deployment": {"name":"nginx-deployment","namespace":"default"}, "namespace": "default", "name": "nginx-deployment", "reconcileID": "89fd2658-ea9c-465c-8c79-b67e7fb00625", "deployment": {"name":"nginx-deployment","namespace":"default"}}
+2026-01-01T19:16:34Z    DEBUG   events  Updated job template images from Deployment default/nginx-deployment      {"type": "Normal", "object": {"kind":"CronJob","namespace":"default","name":"nginx-cronjob","uid":"a6fcd9e8-e5ca-4359-bc6e-59d001869be6","apiVersion":"batch/v1","resourceVersion":"21166"}, "reason": "CronJobUpdated"}
+E0101 19:16:34.756536       1 event.go:280] Server rejected event '&v1.Event{TypeMeta:v1.TypeMeta{Kind:"", APIVersion:""}, ObjectMeta:v1.ObjectMeta{Name:"nginx-cronjob.1886b16f272a2dcb", GenerateName:"", Namespace:"default", SelfLink:"", UID:"", ResourceVersion:"", Generation:0, CreationTimestamp:time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC), DeletionTimestamp:<nil>, DeletionGracePeriodSeconds:(*int64)(nil), Labels:map[string]string(nil), Annotations:map[string]string(nil), OwnerReferences:[]v1.OwnerReference(nil), Finalizers:[]string(nil), ManagedFields:[]v1.ManagedFieldsEntry(nil)}, InvolvedObject:v1.ObjectReference{Kind:"CronJob", Namespace:"default", Name:"nginx-cronjob", UID:"a6fcd9e8-e5ca-4359-bc6e-59d001869be6", APIVersion:"batch/v1", ResourceVersion:"21166", FieldPath:""}, Reason:"CronJobUpdated", Message:"Updated job template images from Deployment default/nginx-deployment", Source:v1.EventSource{Component:"cronjob-controller", Host:""}, FirstTimestamp:time.Date(2026, time.January, 1, 19, 16, 34, 746060235, time.Local), LastTimestamp:time.Date(2026, time.January, 1, 19, 16, 34, 746060235, time.Local), Count:1, Type:"Normal", EventTime:time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC), Series:(*v1.EventSeries)(nil), Action:"", Related:(*v1.ObjectReference)(nil), ReportingController:"", ReportingInstance:""}': 'events is forbidden: User "system:serviceaccount:default:cronjob-sync-sa" cannot create resource "events" in API group "" in the namespace "default"' (will not retry!)
+2026-01-01T19:16:34Z    INFO    KubeAPIWarningLogger    child pods are preserved by default when jobs are deleted; set propagationPolicy=Background to remove them or set propagationPolicy=Orphan to suppress this warning
+2026-01-01T19:16:34Z    DEBUG   events  Deleted Job nginx-cronjob-29454910 for CronJob nginx-cronjob to allow new runs with updated image {"type": "Normal", "object": {"kind":"Job","namespace":"default","name":"nginx-cronjob-29454910","uid":"71bbc160-0ff0-4c6e-aacd-dffc420f9072","apiVersion":"batch/v1","resourceVersion":"20808"}, "reason": "JobDeleted"}
+E0101 19:16:34.863794       1 event.go:280] Server rejected event '&v1.Event{TypeMeta:v1.TypeMeta{Kind:"", APIVersion:""}, ObjectMeta:v1.ObjectMeta{Name:"nginx-cronjob-29454910.1886b16f2de14d74", GenerateName:"", Namespace:"default", SelfLink:"", UID:"", ResourceVersion:"", Generation:0, CreationTimestamp:time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC), DeletionTimestamp:<nil>, DeletionGracePeriodSeconds:(*int64)(nil), Labels:map[string]string(nil), Annotations:map[string]string(nil), OwnerReferences:[]v1.OwnerReference(nil), Finalizers:[]string(nil), ManagedFields:[]v1.ManagedFieldsEntry(nil)}, InvolvedObject:v1.ObjectReference{Kind:"Job", Namespace:"default", Name:"nginx-cronjob-29454910", UID:"71bbc160-0ff0-4c6e-aacd-dffc420f9072", APIVersion:"batch/v1", ResourceVersion:"20808", FieldPath:""}, Reason:"JobDeleted", Message:"Deleted Job nginx-cronjob-29454910 for CronJob nginx-cronjob to allow new runs with updated image", Source:v1.EventSource{Component:"cronjob-controller", Host:""}, FirstTimestamp:time.Date(2026, time.January, 1, 19, 16, 34, 858724724, time.Local), LastTimestamp:time.Date(2026, time.January, 1, 19, 16, 34, 858724724, time.Local), Count:1, Type:"Normal", EventTime:time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC), Series:(*v1.EventSeries)(nil), Action:"", Related:(*v1.ObjectReference)(nil), ReportingController:"", ReportingInstance:""}': 'events is forbidden: User "system:serviceaccount:default:cronjob-sync-sa" cannot create resource "events" in API group "" in the namespace "default"' (will not retry!)
+2026-01-01T19:16:34Z    DEBUG   events  Deleted Job nginx-cronjob-29454915 for CronJob nginx-cronjob to allow new runs with updated image {"type": "Normal", "object": {"kind":"Job","namespace":"default","name":"nginx-cronjob-29454915","uid":"bafba499-14d2-421a-a83a-5ba902fe325c","apiVersion":"batch/v1","resourceVersion":"21093"}, "reason": "JobDeleted"}
+2026-01-01T19:16:34Z    INFO    updated cronjob image and deleted related jobs  {"controller": "deployment", "controllerGroup": "apps", "controllerKind": "Deployment", "Deployment": {"name":"nginx-deployment","namespace":"default"}, "namespace": "default", "name": "nginx-deployment", "reconcileID": "89fd2658-ea9c-465c-8c79-b67e7fb00625", "cronjob": "nginx-cronjob"}
+2026-01-01T19:16:34Z    DEBUG   events  Deleted existing Jobs so future runs use the updated image{"type": "Normal", "object": {"kind":"CronJob","namespace":"default","name":"nginx-cronjob","uid":"a6fcd9e8-e5ca-4359-bc6e-59d001869be6","apiVersion":"batch/v1","resourceVersion":"21166"}, "reason": "JobsRecreated"}
+2026-01-01T19:16:34Z    INFO    reconciling deployment  {"controller": "deployment", "controllerGroup": "apps", "controllerKind": "Deployment", "Deployment": {"name":"nginx-deployment","namespace":"default"}, "namespace": "default", "name": "nginx-deployment", "reconcileID": "6d1c8fbd-af6f-4574-a25c-39e3ff4a3c87", "deployment": {"name":"nginx-deployment","namespace":"default"}}
+2026-01-01T19:16:34Z    INFO    cronjob already up-to-date      {"controller": "deployment", "controllerGroup": "apps", "controllerKind": "Deployment", "Deployment": {"name":"nginx-deployment","namespace":"default"}, "namespace": "default", "name": "nginx-deployment", "reconcileID": "6d1c8fbd-af6f-4574-a25c-39e3ff4a3c87", "cronjob": "nginx-cronjob"}
+E0101 19:16:34.874860       1 event.go:280] Server rejected event '&v1.Event{TypeMeta:v1.TypeMeta{Kind:"", APIVersion:""}, ObjectMeta:v1.ObjectMeta{Name:"nginx-cronjob-29454915.1886b16f2e861c4a", GenerateName:"", Namespace:"default", SelfLink:"", UID:"", ResourceVersion:"", Generation:0, CreationTimestamp:time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC), DeletionTimestamp:<nil>, DeletionGracePeriodSeconds:(*int64)(nil), Labels:map[string]string(nil), Annotations:map[string]string(nil), OwnerReferences:[]v1.OwnerReference(nil), Finalizers:[]string(nil), ManagedFields:[]v1.ManagedFieldsEntry(nil)}, InvolvedObject:v1.ObjectReference{Kind:"Job", Namespace:"default", Name:"nginx-cronjob-29454915", UID:"bafba499-14d2-421a-a83a-5ba902fe325c", APIVersion:"batch/v1", ResourceVersion:"21093", FieldPath:""}, Reason:"JobDeleted", Message:"Deleted Job nginx-cronjob-29454915 for CronJob nginx-cronjob to allow new runs with updated image", Source:v1.EventSource{Component:"cronjob-controller", Host:""}, FirstTimestamp:time.Date(2026, time.January, 1, 19, 16, 34, 869525578, time.Local), LastTimestamp:time.Date(2026, time.January, 1, 19, 16, 34, 869525578, time.Local), Count:1, Type:"Normal", EventTime:time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC), Series:(*v1.EventSeries)(nil), Action:"", Related:(*v1.ObjectReference)(nil), ReportingController:"", ReportingInstance:""}': 'events is forbidden: User "system:serviceaccount:default:cronjob-sync-sa" cannot create resource "events" in API group "" in the namespace "default"' (will not retry!)
+E0101 19:16:34.877866       1 event.go:280] Server rejected event '&v1.Event{TypeMeta:v1.TypeMeta{Kind:"", APIVersion:""}, ObjectMeta:v1.ObjectMeta{Name:"nginx-cronjob.1886b16f2e940827", GenerateName:"", Namespace:"default", SelfLink:"", UID:"", ResourceVersion:"", Generation:0, CreationTimestamp:time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC), DeletionTimestamp:<nil>, DeletionGracePeriodSeconds:(*int64)(nil), Labels:map[string]string(nil), Annotations:map[string]string(nil), OwnerReferences:[]v1.OwnerReference(nil), Finalizers:[]string(nil), ManagedFields:[]v1.ManagedFieldsEntry(nil)}, InvolvedObject:v1.ObjectReference{Kind:"CronJob", Namespace:"default", Name:"nginx-cronjob", UID:"a6fcd9e8-e5ca-4359-bc6e-59d001869be6", APIVersion:"batch/v1", ResourceVersion:"21166", FieldPath:""}, Reason:"JobsRecreated", Message:"Deleted existing Jobs so future runs use the updated image", Source:v1.EventSource{Component:"cronjob-controller", Host:""}, FirstTimestamp:time.Date(2026, time.January, 1, 19, 16, 34, 870437927, time.Local), LastTimestamp:time.Date(2026, time.January, 1, 19, 16, 34, 870437927, time.Local), Count:1, Type:"Normal", EventTime:time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC), Series:(*v1.EventSeries)(nil), Action:"", Related:(*v1.ObjectReference)(nil), ReportingController:"", ReportingInstance:""}': 'events is forbidden: User "system:serviceaccount:default:cronjob-sync-sa" cannot create resource "events" in API group "" in the namespace "default"' (will not retry!)
+2026-01-01T19:16:42Z    INFO    reconciling deployment  {"controller": "deployment", "controllerGroup": "apps", "controllerKind": "Deployment", "Deployment": {"name":"nginx-deployment","namespace":"default"}, "namespace": "default", "name": "nginx-deployment", "reconcileID": "d424054a-1798-4720-a3e9-1036f446cf59", "deployment": {"name":"nginx-deployment","namespace":"default"}}
+2026-01-01T19:16:42Z    INFO    cronjob already up-to-date      {"controller": "deployment", "controllerGroup": "apps", "controllerKind": "Deployment", "Deployment": {"name":"nginx-deployment","namespace":"default"}, "namespace": "default", "name": "nginx-deployment", "reconcileID": "d424054a-1798-4720-a3e9-1036f446cf59", "cronjob": "nginx-cronjob"}
+2026-01-01T19:16:42Z    INFO    reconciling deployment  {"controller": "deployment", "controllerGroup": "apps", "controllerKind": "Deployment", "Deployment": {"name":"nginx-deployment","namespace":"default"}, "namespace": "default", "name": "nginx-deployment", "reconcileID": "c11684ca-c0b9-4675-ba6f-cf130d27749f", "deployment": {"name":"nginx-deployment","namespace":"default"}}
+2026-01-01T19:16:42Z    INFO    cronjob already up-to-date      {"controller": "deployment", "controllerGroup": "apps", "controllerKind": "Deployment", "Deployment": {"name":"nginx-deployment","namespace":"default"}, "namespace": "default", "name": "nginx-deployment", "reconcileID": "c11684ca-c0b9-4675-ba6f-cf130d27749f", "cronjob": "nginx-cronjob"}
+
+
+^C%                                                                                               
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % oc get job -o yaml
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % oc get cj -o yaml
+apiVersion: v1
+items:
+- apiVersion: batch/v1
+  kind: CronJob
+  metadata:
+    annotations:
+      controller.example.com/managed-by-deployment: nginx-deployment
+    creationTimestamp: "2026-01-01T18:52:12Z"
+    generation: 1
+    labels:
+      managed-by-deployment: nginx-deployment
+    name: nginx-cronjob
+    namespace: default
+    resourceVersion: "20057"
+    uid: 8bd834fc-4547-4b96-bbd3-13f2e70182a8
+  spec:
+    concurrencyPolicy: Allow
+    failedJobsHistoryLimit: 1
+    jobTemplate:
+      metadata:
+        creationTimestamp: null
+      spec:
+        template:
+          metadata:
+            creationTimestamp: null
+          spec:
+            containers:
+            - args:
+              - -c
+              - echo hello; sleep 10
+              image: nginx:1.21
+              imagePullPolicy: IfNotPresent
+              name: nginx
+              resources: {}
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+            dnsPolicy: ClusterFirst
+            restartPolicy: OnFailure
+            schedulerName: default-scheduler
+            securityContext: {}
+            terminationGracePeriodSeconds: 30
+    schedule: '*/5 * * * *'
+    successfulJobsHistoryLimit: 3
+    suspend: false
+  status: {}
+kind: List
+metadata:
+  resourceVersion: ""
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % oc get po
+NAME                                READY   STATUS    RESTARTS   AGE
+nginx-deployment-764dd87c46-4fn8r   1/1     Running   0          7h23m
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % oc get po
+NAME                                 READY   STATUS      RESTARTS   AGE
+cronjob-controller-d6d9567cd-vrxc8   1/1     Running     0          2m22s
+nginx-cronjob-29454910-sj6ts         0/1     Completed   0          6m12s
+nginx-cronjob-29454915-8cgjp         0/1     Completed   0          72s
+nginx-deployment-764dd87c46-4fn8r    1/1     Running     0          7h47m
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % oc set image deployment/nginx-deployment nginx=nginx:1.22 -n default
+deployment.apps/nginx-deployment image updated
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % oc get po
+NAME                                 READY   STATUS              RESTARTS   AGE
+cronjob-controller-d6d9567cd-vrxc8   1/1     Running             0          2m48s
+nginx-cronjob-29454910-sj6ts         0/1     Completed           0          6m38s
+nginx-cronjob-29454915-8cgjp         0/1     Completed           0          98s
+nginx-deployment-764dd87c46-4fn8r    1/1     Running             0          7h47m
+nginx-deployment-9d4cfb889-gmr6v     0/1     ContainerCreating   0          4s
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % oc get deployment nginx-deployment -o yaml | 
+grep -i image
+      - image: nginx:1.22
+        imagePullPolicy: IfNotPresent
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % oc get po
+NAME                                 READY   STATUS      RESTARTS   AGE
+cronjob-controller-d6d9567cd-vrxc8   1/1     Running     0          3m13s
+nginx-cronjob-29454910-sj6ts         0/1     Completed   0          7m3s
+nginx-cronjob-29454915-8cgjp         0/1     Completed   0          2m3s
+nginx-deployment-9d4cfb889-gmr6v     1/1     Running     0          29s
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % oc get cj
+NAME            SCHEDULE      TIMEZONE   SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+nginx-cronjob   */5 * * * *   <none>     False     0        2m37s           10m
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % oc get cj nginx-cronjob -o yaml
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  annotations:
+    controller.example.com/managed-by-deployment: nginx-deployment
+  creationTimestamp: "2026-01-01T19:07:07Z"
+  generation: 2
+  labels:
+    managed-by-deployment: nginx-deployment
+  name: nginx-cronjob
+  namespace: default
+  resourceVersion: "21166"
+  uid: a6fcd9e8-e5ca-4359-bc6e-59d001869be6
+spec:
+  concurrencyPolicy: Allow
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - args:
+            - /bin/sh
+            - -c
+            - echo hello; sleep 10
+            image: nginx:1.22
+            imagePullPolicy: IfNotPresent
+            name: nginx
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+          dnsPolicy: ClusterFirst
+          restartPolicy: OnFailure
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+  schedule: '*/5 * * * *'
+  successfulJobsHistoryLimit: 3
+  suspend: false
+status:
+  lastScheduleTime: "2026-01-01T19:15:00Z"
+  lastSuccessfulTime: "2026-01-01T19:15:13Z"
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % oc get po
+NAME                                 READY   STATUS      RESTARTS   AGE
+cronjob-controller-d6d9567cd-vrxc8   1/1     Running     0          4m26s
+nginx-cronjob-29454910-sj6ts         0/1     Completed   0          8m16s
+nginx-cronjob-29454915-8cgjp         0/1     Completed   0          3m16s
+nginx-deployment-9d4cfb889-gmr6v     1/1     Running     0          102s
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % oc get job
+No resources found in default namespace.
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % oc get cj 
+NAME            SCHEDULE      TIMEZONE   SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+nginx-cronjob   */5 * * * *   <none>     False     0        3m44s           11m
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % oc get cj -o yaml | grep -i image
+              image: nginx:1.22
+              imagePullPolicy: IfNotPresent
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % oc get po
+NAME                                 READY   STATUS      RESTARTS   AGE
+cronjob-controller-d6d9567cd-vrxc8   1/1     Running     0          5m18s
+nginx-cronjob-29454910-sj6ts         0/1     Completed   0          9m8s
+nginx-cronjob-29454915-8cgjp         0/1     Completed   0          4m8s
+nginx-deployment-9d4cfb889-gmr6v     1/1     Running     0          2m34s
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % oc get po
+NAME                                 READY   STATUS      RESTARTS   AGE
+cronjob-controller-d6d9567cd-vrxc8   1/1     Running     0          5m32s
+nginx-cronjob-29454910-sj6ts         0/1     Completed   0          9m22s
+nginx-cronjob-29454915-8cgjp         0/1     Completed   0          4m22s
+nginx-deployment-9d4cfb889-gmr6v     1/1     Running     0          2m48s
+                                                                                                  
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+                                                                                                  
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller % 
+nitinkumar@pallavis-MacBook-Pro cronjob_controller %        

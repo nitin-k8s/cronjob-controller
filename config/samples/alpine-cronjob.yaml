@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: alpine-cronjob
+  labels:
+    managed-by-deployment: alpine-deployment
+  annotations:
+    controller.example.com/managed-by-deployment: alpine-deployment
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: alpine
+              image: alpine:3.18
+              command: ["sh", "-c", "echo alpine job; sleep 1"]
+          restartPolicy: OnFailure

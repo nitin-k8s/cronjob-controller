@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cronjob-controller-metrics
+  labels:
+    app: cronjob-controller
+spec:
+  selector:
+    app: cronjob-controller
+  ports:
+    - name: metrics
+      port: 8080
+      targetPort: 8080

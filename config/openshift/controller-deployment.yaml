@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cronjob-sync-sa
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cronjob-controller
+  labels:
+    app: cronjob-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cronjob-controller
+  template:
+    metadata:
+      labels:
+        app: cronjob-controller
+    spec:
+      serviceAccountName: cronjob-sync-sa
+      securityContext:
+        runAsUser: 1000
+        runAsNonRoot: true
+      # If your OpenShift cluster requires imagePullSecrets for private registries,
+      # uncomment and set them here.
+      # imagePullSecrets:
+      #   - name: my-registry-secret
+      containers:
+        - name: manager
+          image: imagedb/cronjob-controller:test
+          imagePullPolicy: Always
+          args:
+            - --metrics-addr=:8080
+            - --health-probe-addr=:8081
+            - --leader-elect
+          ports:
+            - containerPort: 8080
+              name: metrics
+            - containerPort: 8081
+              name: probe
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "400m"
+              memory: "512Mi"
+          # Readiness & liveness probes against controller-runtime endpoints
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8081
+            initialDelaySeconds: 10
+            periodSeconds: 20
+            timeoutSeconds: 2
+            failureThreshold: 5
+          # Optional startup probe to avoid killing slow starters
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: 8081
+            failureThreshold: 30
+            periodSeconds: 10
+          env:
+            - name: default
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: WATCH_NAMESPACE
+              # set to a namespace name to run controller in namespace-scoped mode
+              # leave empty to run cluster-wide (requires ClusterRole/ClusterRoleBinding)
+              value: "default"

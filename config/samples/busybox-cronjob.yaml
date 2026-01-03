@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: busybox-cronjob
+  labels:
+    managed-by-deployment: busybox-deployment
+  annotations:
+    controller.example.com/managed-by-deployment: busybox-deployment
+spec:
+  schedule: "*/10 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: busybox
+              image: busybox:1.35
+              command: ["sh", "-c", "date; echo busybox job"]
+          restartPolicy: OnFailure
